@@ -1,6 +1,4 @@
-﻿
-using System;
-using Workstation.ServiceModel.Ua;
+﻿using Workstation.ServiceModel.Ua;
 
 [assembly: TypeLibrary()]
 namespace CustomTypeLibrary

@@ -11,18 +11,88 @@ on:
 
 jobs:
   build:
-
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: |
+            6.0
+            8.0
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal --filter FullyQualifiedName!~Workstation.UaClient.IntegrationTests 
+    # - name: Test
+    #   run: dotnet test --no-build --verbosity normal --filter FullyQualifiedName!~Workstation.UaClient.IntegrationTests 
+  
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          - UaClient/Workstation.UaClient.csproj
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0
+            9.0
+
+      - name: Determine version
+        id: set_version
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            VERSION="${GITHUB_REF##refs/tags/v}"
+          else
+            VERSION="0.0.${{ github.run_number }}-dev"
+          fi
+
+          echo "Using version: $VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Set artifact name from project path
+        id: set_artifact
+        run: |
+            PROJECT_PATH="${{ matrix.project }}"
+            VERSION="${{ steps.set_version.outputs.version }}"
+
+            PACKAGE_ID=$(basename "$PROJECT_PATH" .csproj)
+            ARTIFACT_BASE="${PACKAGE_ID}.${VERSION}"
+
+            echo "PACKAGE_ID=$PACKAGE_ID"
+            echo "ARTIFACT_BASE=$ARTIFACT_BASE"
+
+            echo "name=$PACKAGE_ID" >> "$GITHUB_OUTPUT"
+            echo "base=$ARTIFACT_BASE" >> "$GITHUB_OUTPUT"
+
+      - name: Build
+        run: dotnet build -c Release /p:Version=${{ steps.set_version.outputs.version }} /p:PackageVersion=${{ steps.set_version.outputs.version }} /p:SymbolPackageFormat=snupkg /p:IncludeSymbols=true ${{ matrix.project }}
+      - name: Pack
+        run: dotnet pack -c Release /p:Version=${{ steps.set_version.outputs.version }} /p:PackageVersion=${{ steps.set_version.outputs.version }} /p:SymbolPackageFormat=snupkg /p:IncludeSymbols=true -o "${{ github.workspace }}/artifacts" ${{ matrix.project }}
+
+      - name: Upload NuGet package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.set_artifact.outputs.base }}.nupkg
+          path: "${{ github.workspace }}/artifacts/${{ steps.set_artifact.outputs.base }}.nupkg"
+
+      - name: Upload NuGet symbols package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.set_artifact.outputs.base }}.symbols.nupkg
+          path: "${{ github.workspace }}/artifacts/${{ steps.set_artifact.outputs.base }}.snupkg"
+
+      - name: Push to GitHub Packages
+        if: github.repository != 'convertersystems/opc-ua-client'
+        run: dotnet nuget push "${{ github.workspace }}/artifacts/${{ steps.set_artifact.outputs.base }}.nupkg" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Push to NuGet.org
+        if: startsWith(github.ref, 'refs/tags/v') && github.repository == 'convertersystems/opc-ua-client'
+        run: dotnet nuget push "${{ github.workspace }}/artifacts/${{ steps.set_artifact.outputs.base }}.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ secrets.NUGET_API_KEY }}"

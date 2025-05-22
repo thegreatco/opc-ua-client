@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Converter Systems LLC. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-
 namespace Workstation.ServiceModel.Ua.Channels
 {
     public static class StackProfiles
@@ -33,7 +31,7 @@ namespace Workstation.ServiceModel.Ua.Channels
             {
                 case TransportProfileUris.UaTcpTransport:
                     return TcpUascBinary;
-                 // Use TcpUascBinary as fallback, or should we throw here?
+                // Use TcpUascBinary as fallback, or should we throw here?
                 default:
                     return TcpUascBinary;
             }

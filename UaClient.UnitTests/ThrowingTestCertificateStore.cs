@@ -1,9 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
+
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.X509;
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Workstation.ServiceModel.Ua;
 
 namespace Workstation.UaClient

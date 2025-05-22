@@ -1,18 +1,17 @@
 ﻿// Copyright (c) Converter Systems LLC. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Microsoft.Extensions.Logging;
+using Microsoft.IO;
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
-using Microsoft.Extensions.Logging;
-using Microsoft.IO;
-using Org.BouncyCastle.Crypto.Parameters;
 
 namespace Workstation.ServiceModel.Ua.Channels
 {
@@ -170,7 +169,7 @@ namespace Workstation.ServiceModel.Ua.Channels
         protected override async Task OnOpenAsync(CancellationToken token = default)
         {
             await base.OnOpenAsync(token).ConfigureAwait(false);
-            
+
             var options = new TransportConnectionOptions
             {
                 ReceiveBufferSize = RemoteReceiveBufferSize,

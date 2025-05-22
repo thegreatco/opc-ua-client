@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Converter Systems LLC. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Workstation.ServiceModel.Ua;
 using Workstation.ServiceModel.Ua.Channels;
 
 namespace Workstation.ServiceModel.Ua

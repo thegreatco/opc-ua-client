@@ -1,10 +1,11 @@
 ﻿using FluentAssertions;
-using System;
+
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
+
 using Workstation.Collections;
+
 using Xunit;
 
 namespace Workstation.UaClient.UnitTests
@@ -15,7 +16,7 @@ namespace Workstation.UaClient.UnitTests
         public void ObservePropertyChanged()
         {
             var queue = new ObservableQueue<int>();
-            
+
             var props = new List<string>();
             var itemQuery = props.Where(p => p == "Item[]");
             var countQuery = props.Where(p => p == "Count");
@@ -52,7 +53,7 @@ namespace Workstation.UaClient.UnitTests
             countQuery
                 .Should().HaveCount(5);
         }
-        
+
         [Fact]
         public void ObservePropertyChangedEmptyClear()
         {
@@ -119,7 +120,7 @@ namespace Workstation.UaClient.UnitTests
                     new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset)
                 );
         }
-        
+
         [Fact]
         public void ObserveCollectionChangedEmptyClear()
         {
@@ -133,12 +134,12 @@ namespace Workstation.UaClient.UnitTests
             count
                 .Should().Be(0);
         }
-        
+
         [Fact]
         public void ObservePropertyChangedFixedSize()
         {
             var queue = new ObservableQueue<int>(2, isFixedSize: true);
-            
+
             var props = new List<string>();
             var itemQuery = props.Where(p => p == "Item[]");
             var countQuery = props.Where(p => p == "Count");
@@ -175,7 +176,7 @@ namespace Workstation.UaClient.UnitTests
             countQuery
                 .Should().HaveCount(6);
         }
-        
+
         [Fact]
         public void ObserveCollectionChangedFixedSize()
         {

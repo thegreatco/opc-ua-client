@@ -1,13 +1,15 @@
 ﻿using FluentAssertions;
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Workstation.ServiceModel.Ua;
 using Workstation.ServiceModel.Ua.Channels;
+
 using Xunit;
 
 namespace Workstation.UaClient.UnitTests.Channels
@@ -54,7 +56,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                     .Should().Be(CommunicationState.Closing);
                 await this.LeaveAsync();
             }
-            
+
             private void Event_Closing(object sender, EventArgs e)
             {
                 this.Enter();
@@ -97,7 +99,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                 }
                 await this.LeaveAsync();
             }
-            
+
             private void Event_Opening(object sender, EventArgs e)
             {
                 this.Enter();
@@ -127,7 +129,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                 }
                 await this.LeaveAsync();
             }
-            
+
             private void Event_Opened(object sender, EventArgs e)
             {
                 this.Enter();
@@ -142,7 +144,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                     .Should().Be(CommunicationState.Faulted);
                 await this.LeaveAsync();
             }
-            
+
             private void Event_Faulted(object sender, EventArgs e)
             {
                 this.Enter();
@@ -161,7 +163,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                 }
             }
 
-            public void DoOn(string methodName, Func<CommunicationObject,Task> action)
+            public void DoOn(string methodName, Func<CommunicationObject, Task> action)
             {
                 this.actionMap[methodName] = action;
             }
@@ -184,7 +186,7 @@ namespace Workstation.UaClient.UnitTests.Channels
             var o = new TestCommunicationObject();
 
             await o.OpenAsync();
-            
+
             o.State
                 .Should().Be(CommunicationState.Opened);
             o.Record
@@ -197,7 +199,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                     "Event_Opened",
                 });
         }
-        
+
         [Fact]
         public async Task OpenAndAbortOnOpening()
         {
@@ -208,7 +210,7 @@ namespace Workstation.UaClient.UnitTests.Channels
             o.DoOn("OnOpeningAsync", async co => await co.AbortAsync());
 
             await o.OpenAsync();
-            
+
             o.State
                 .Should().Be(CommunicationState.Closed);
 
@@ -217,7 +219,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                 {
                     "OnOpeningAsync",
                     "Event_Opening",
-                    "OnClosingAsync", 
+                    "OnClosingAsync",
                     "Event_Closing",
                     "OnAbortAsync",
                     "OnClosedAsync",
@@ -226,7 +228,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                     "OnOpenedAsync"
                 });
         }
-        
+
         [Fact]
         public async Task OpenAndCloseOnOpening()
         {
@@ -237,7 +239,7 @@ namespace Workstation.UaClient.UnitTests.Channels
             o.DoOn("OnOpeningAsync", async co => await co.CloseAsync());
 
             await o.OpenAsync();
-            
+
             o.State
                 .Should().Be(CommunicationState.Closed);
 
@@ -246,7 +248,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                 {
                     "OnOpeningAsync",
                     "Event_Opening",
-                    "OnClosingAsync", 
+                    "OnClosingAsync",
                     "Event_Closing",
                     "OnAbortAsync",
                     "OnClosedAsync",
@@ -255,7 +257,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                     "OnOpenedAsync"
                 });
         }
-        
+
         [Fact]
         public async Task OpenAndAbortOnOpen()
         {
@@ -266,7 +268,7 @@ namespace Workstation.UaClient.UnitTests.Channels
             o.DoOn("OnOpenAsync", async co => await co.AbortAsync());
 
             await o.OpenAsync();
-            
+
             o.State
                 .Should().Be(CommunicationState.Closed);
 
@@ -276,7 +278,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                     "OnOpeningAsync",
                     "Event_Opening",
                     "OnOpenAsync",
-                    "OnClosingAsync", 
+                    "OnClosingAsync",
                     "Event_Closing",
                     "OnAbortAsync",
                     "OnClosedAsync",
@@ -284,7 +286,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                     "OnOpenedAsync"
                 });
         }
-        
+
         [Fact]
         public async Task OpenAndCloseOnOpen()
         {
@@ -295,7 +297,7 @@ namespace Workstation.UaClient.UnitTests.Channels
             o.DoOn("OnOpenAsync", async co => await co.CloseAsync());
 
             await o.OpenAsync();
-            
+
             o.State
                 .Should().Be(CommunicationState.Closed);
 
@@ -305,7 +307,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                     "OnOpeningAsync",
                     "Event_Opening",
                     "OnOpenAsync",
-                    "OnClosingAsync", 
+                    "OnClosingAsync",
                     "Event_Closing",
                     "OnAbortAsync",
                     "OnClosedAsync",
@@ -321,7 +323,7 @@ namespace Workstation.UaClient.UnitTests.Channels
 
             await o.OpenAsync();
             await o.CloseAsync();
-            
+
             o.State
                 .Should().Be(CommunicationState.Closed);
             o.Record
@@ -365,7 +367,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                     "Event_Closed"
                 });
         }
-        
+
         [Fact]
         public async Task Close()
         {
@@ -405,7 +407,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                     "Event_Closed"
                 });
         }
-        
+
         [Fact]
         public async Task CloseAndClose()
         {
@@ -426,7 +428,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                     "Event_Closed"
                 });
         }
-        
+
         [Fact]
         public async Task CloseAndAbort()
         {
@@ -447,7 +449,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                     "Event_Closed"
                 });
         }
-        
+
         [Fact]
         public async Task CloseAndCloseOnClosing()
         {
@@ -468,7 +470,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                     "Event_Closed"
                 });
         }
-        
+
         [Fact]
         public async Task CloseAndAbortOnClosing()
         {
@@ -489,7 +491,7 @@ namespace Workstation.UaClient.UnitTests.Channels
                     "Event_Closed"
                 });
         }
-        
+
         [Fact]
         public async Task OpenAndOpen()
         {
@@ -512,7 +514,7 @@ namespace Workstation.UaClient.UnitTests.Channels
             await o.Invoking(x => x.OpenAsync())
                 .Should().ThrowAsync<InvalidOperationException>();
         }
-        
+
         [Fact]
         public async Task OpenAndThrowOnOpening()
         {
@@ -521,10 +523,10 @@ namespace Workstation.UaClient.UnitTests.Channels
 
             await o.Invoking(x => x.OpenAsync())
                 .Should().ThrowAsync<TestException>();
-            
+
             o.State
                 .Should().Be(CommunicationState.Faulted);
-            
+
             o.Record
                 .Should().Equal(new string[]
                 {

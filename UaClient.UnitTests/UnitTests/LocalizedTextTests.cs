@@ -1,10 +1,11 @@
 ﻿using FluentAssertions;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Workstation.ServiceModel.Ua;
+
 using Xunit;
 
 namespace Workstation.UaClient.UnitTests
@@ -35,8 +36,8 @@ namespace Workstation.UaClient.UnitTests
             {
                 var list = LocalizedTexts.Select((f, i) => (text: f(), index: i)).ToList();
                 return from a in list
-                    from b in list
-                    select new object[] { a.text, b.text, a.index == b.index };
+                       from b in list
+                       select new object[] { a.text, b.text, a.index == b.index };
             }
         }
 
@@ -73,7 +74,7 @@ namespace Workstation.UaClient.UnitTests
                     .Should().NotBe(b);
                 a
                     .Should().NotBe(5);
-                
+
                 // Test Equal(LocalizableText)
                 a.Equals(b)
                     .Should().BeFalse();

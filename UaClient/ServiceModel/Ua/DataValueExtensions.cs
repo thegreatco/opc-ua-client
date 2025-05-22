@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Workstation.ServiceModel.Ua
@@ -14,23 +13,19 @@ namespace Workstation.ServiceModel.Ua
         /// </summary>
         /// <param name="dataValue">The DataValue.</param>
         /// <returns>The value.</returns>
-        public static object? GetValue(this DataValue dataValue)
+        public static object? GetValue(this DataValue? dataValue)
         {
-            var value = dataValue.Value;
-            switch (value)
+            if (dataValue is null)
             {
-                case ExtensionObject obj:
-
-                    return obj.BodyType == BodyType.Encodable ? obj.Body : obj;
-
-                case ExtensionObject[] objArray:
-
-                    return objArray.Select(e => e.BodyType == BodyType.Encodable ? e.Body : e).ToArray();
-
-                default:
-
-                    return value;
+                throw new ArgumentNullException(nameof(dataValue));
             }
+            var value = dataValue.Value;
+            return value switch
+            {
+                ExtensionObject obj => obj.BodyType == BodyType.Encodable ? obj.Body : obj,
+                ExtensionObject[] objArray => objArray.Select(e => e.BodyType == BodyType.Encodable ? e.Body : e).ToArray(),
+                _ => value
+            };
         }
 
         /// <summary>
@@ -39,9 +34,12 @@ namespace Workstation.ServiceModel.Ua
         /// <typeparam name="T">The expected type.</typeparam>
         /// <param name="dataValue">The DataValue.</param>
         /// <returns>The value, if an instance of the specified Type, otherwise the Type's default value.</returns>
-        [return: MaybeNull]
-        public static T GetValueOrDefault<T>(this DataValue dataValue)
+        public static T? GetValueOrDefault<T>(this DataValue? dataValue)
         {
+            if (dataValue is null)
+            {
+                return default;
+            }
             var value = dataValue.Value;
             switch (value)
             {
@@ -64,8 +62,8 @@ namespace Workstation.ServiceModel.Ua
                     }
                     try
                     {
-                        var v4 = typeof(Enumerable).GetMethod("Cast")!.MakeGenericMethod(elementType).Invoke(null, new object?[] { v3 });
-                        var v5 = typeof(Enumerable).GetMethod("ToArray")!.MakeGenericMethod(elementType).Invoke(null, new object?[] { v4 });
+                        var v4 = typeof(Enumerable).GetMethod("Cast")!.MakeGenericMethod(elementType).Invoke(null, [v3]);
+                        var v5 = typeof(Enumerable).GetMethod("ToArray")!.MakeGenericMethod(elementType).Invoke(null, [v4]);
                         if (v5 is T t2)
                         {
                             return t2;
@@ -95,9 +93,12 @@ namespace Workstation.ServiceModel.Ua
         /// <param name="dataValue">A DataValue</param>
         /// <param name="defaultValue">A default value.</param>
         /// <returns>The value, if an instance of the specified Type, otherwise the specified default value.</returns>
-        [return: NotNullIfNotNull("defaultValue")]
-        public static T GetValueOrDefault<T>(this DataValue dataValue, T defaultValue)
+        public static T GetValueOrDefault<T>(this DataValue? dataValue, T defaultValue)
         {
+            if (dataValue is null)
+            {
+                return defaultValue;
+            }
             var value = dataValue.Value;
             switch (value)
             {

@@ -27,7 +27,7 @@ namespace Workstation.ServiceModel.Ua
 
             return e;
         }
-
+        
         public static BaseEvent Deserialize(Type type, Variant[] eventFields)
         {
             var e = (BaseEvent)Activator.CreateInstance(type)!;
@@ -41,7 +41,6 @@ namespace Workstation.ServiceModel.Ua
 
             return e;
         }
-
         public static SimpleAttributeOperand[] GetSelectClauses<T>()
             where T : BaseEvent, new()
         {
@@ -65,7 +64,6 @@ namespace Workstation.ServiceModel.Ua
             RegisterSelectClauseAndDeserializer(type);
             return _selectClauseCache[type];
         }
-
         private static void RegisterSelectClauseAndDeserializer(Type type)
         {
             var clauseList = new List<SimpleAttributeOperand>();

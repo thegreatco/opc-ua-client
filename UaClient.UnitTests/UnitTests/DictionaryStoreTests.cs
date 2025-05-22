@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
+
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
+
 using Workstation.ServiceModel.Ua;
+
 using Xunit;
 
 namespace Workstation.UaClient.UnitTests
@@ -61,11 +62,11 @@ namespace Workstation.UaClient.UnitTests
             await store.Invoking(s => s.GetLocalCertificateAsync(app))
                 .Should().ThrowAsync<ArgumentOutOfRangeException>();
         }
-        
+
         [Fact]
         public async Task CreateNoCertificate()
         {
-            var store = new DirectoryStore("nocert", createLocalCertificateIfNotExist:false);
+            var store = new DirectoryStore("nocert", createLocalCertificateIfNotExist: false);
 
             var app = new ApplicationDescription
             {
@@ -79,7 +80,7 @@ namespace Workstation.UaClient.UnitTests
             key
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public async Task CreateCertificate()
         {
@@ -103,7 +104,7 @@ namespace Workstation.UaClient.UnitTests
                     .Should().Be("CN=appname,DC=hostname");
             }
         }
-        
+
         [Fact]
         public async Task LoadCertificate()
         {
@@ -126,7 +127,7 @@ namespace Workstation.UaClient.UnitTests
                     .Should().Be(key2);
             }
         }
-        
+
         [Fact]
         public async Task CertificateDirectoryStructure()
         {
@@ -148,7 +149,7 @@ namespace Workstation.UaClient.UnitTests
                     .Should().HaveCount(1);
             }
         }
-        
+
         [Fact]
         public async Task ValidateCertificateAcceptAll()
         {
@@ -162,7 +163,7 @@ namespace Workstation.UaClient.UnitTests
                     .Should().BeTrue();
             }
         }
-        
+
         [Fact]
         public async Task ValidateCertificateNull()
         {
@@ -197,7 +198,7 @@ namespace Workstation.UaClient.UnitTests
                 var ret = await storeClient.ValidateRemoteCertificateAsync(cert);
                 ret
                     .Should().BeFalse();
-                
+
                 Directory.EnumerateFiles(dirClient.Name + @"/rejected")
                     .Should().HaveCount(1);
             }
@@ -229,7 +230,7 @@ namespace Workstation.UaClient.UnitTests
                     .Should().BeTrue();
             }
         }
-        
+
         private static void CopyAll(string source, string destination)
         {
             Directory.CreateDirectory(destination);
@@ -242,7 +243,7 @@ namespace Workstation.UaClient.UnitTests
 
         class TempDirectory : IDisposable
         {
-            static public TempDirectory Create(string suffix = "", bool deleteOnDispose = true, [CallerMemberName]string name = null)
+            static public TempDirectory Create(string suffix = "", bool deleteOnDispose = true, [CallerMemberName] string name = null)
             {
                 var path = name + suffix;
                 DeleteRecursive(path);

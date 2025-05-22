@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+
 using Workstation.ServiceModel.Ua;
+
 using Xunit;
 
 namespace Workstation.UaClient.UnitTests
@@ -52,7 +53,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void CreateObjectEncodeable()
         {
@@ -108,7 +109,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(length);
         }
-        
+
         [Fact]
         public void CreateArrayNull()
         {
@@ -179,7 +180,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void ImplicitCreateBoolean()
         {
@@ -190,7 +191,7 @@ namespace Workstation.UaClient.UnitTests
             v1
                 .Should().Be(v2);
         }
-        
+
         [Fact]
         public void ExplicitConvertToBoolean()
         {
@@ -205,7 +206,7 @@ namespace Workstation.UaClient.UnitTests
         [Fact]
         public void CreateBooleanArray()
         {
-            var val = new [] { true, false, true };
+            var val = new[] { true, false, true };
             var v = new Variant(val);
 
             v.Value
@@ -231,7 +232,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void ImplicitCreateBooleanArray()
         {
@@ -242,7 +243,7 @@ namespace Workstation.UaClient.UnitTests
             v1.Value
                 .Should().Be(v2.Value);
         }
-        
+
         [Fact]
         public void ExplicitConvertToBooleanArray()
         {
@@ -278,7 +279,7 @@ namespace Workstation.UaClient.UnitTests
             v1
                 .Should().Be(v2);
         }
-        
+
         [Fact]
         public void ExplicitConvertToSByte()
         {
@@ -305,7 +306,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateSByteArrayNull()
         {
@@ -319,8 +320,8 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
-        
+
+
         [Fact]
         public void ImplicitCreateSByteArray()
         {
@@ -331,7 +332,7 @@ namespace Workstation.UaClient.UnitTests
             v1.Value
                 .Should().Be(v2.Value);
         }
-        
+
         [Fact]
         public void ExplicitConvertToSByteArray()
         {
@@ -367,7 +368,7 @@ namespace Workstation.UaClient.UnitTests
             v1
                 .Should().Be(v2);
         }
-        
+
         [Fact]
         public void ExplicitConvertToByte()
         {
@@ -418,7 +419,7 @@ namespace Workstation.UaClient.UnitTests
         [Fact]
         public void CreateShortArray()
         {
-            var val = new short[]{ 2 };
+            var val = new short[] { 2 };
             var v = new Variant(val);
 
             v.Value
@@ -430,7 +431,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateShortArrayNull()
         {
@@ -444,7 +445,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void ImplicitCreateShortArray()
         {
@@ -455,7 +456,7 @@ namespace Workstation.UaClient.UnitTests
             v1.Value
                 .Should().Be(v2.Value);
         }
-        
+
         [Fact]
         public void ExplicitConvertToShortArray()
         {
@@ -518,7 +519,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateUShortArrayNull()
         {
@@ -532,7 +533,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void ImplicitCreateUShortArray()
         {
@@ -543,7 +544,7 @@ namespace Workstation.UaClient.UnitTests
             v1.Value
                 .Should().Be(v2.Value);
         }
-        
+
         [Fact]
         public void ExplicitConvertToUShortArray()
         {
@@ -606,7 +607,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateIntArrayNull()
         {
@@ -620,7 +621,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void ImplicitCreateIntArray()
         {
@@ -631,7 +632,7 @@ namespace Workstation.UaClient.UnitTests
             v1.Value
                 .Should().Be(v2.Value);
         }
-        
+
         [Fact]
         public void ExplicitConvertToIntArray()
         {
@@ -694,7 +695,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateUIntArrayNull()
         {
@@ -708,7 +709,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void ImplicitCreateUIntArray()
         {
@@ -719,7 +720,7 @@ namespace Workstation.UaClient.UnitTests
             v1.Value
                 .Should().Be(v2.Value);
         }
-        
+
         [Fact]
         public void ExplicitConvertToUIntArray()
         {
@@ -782,7 +783,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateLongArrayNull()
         {
@@ -796,7 +797,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void ImplicitCreateLongArray()
         {
@@ -807,7 +808,7 @@ namespace Workstation.UaClient.UnitTests
             v1.Value
                 .Should().Be(v2.Value);
         }
-        
+
         [Fact]
         public void ExplicitConvertToLongArray()
         {
@@ -870,7 +871,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateULongArrayNull()
         {
@@ -884,7 +885,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void ImplicitCreateULongArray()
         {
@@ -895,7 +896,7 @@ namespace Workstation.UaClient.UnitTests
             v1.Value
                 .Should().Be(v2.Value);
         }
-        
+
         [Fact]
         public void ExplicitConvertToULongArray()
         {
@@ -958,7 +959,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateFloatArrayNull()
         {
@@ -972,7 +973,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void ImplicitCreateFloatArray()
         {
@@ -983,7 +984,7 @@ namespace Workstation.UaClient.UnitTests
             v1.Value
                 .Should().Be(v2.Value);
         }
-        
+
         [Fact]
         public void ExplicitConvertToFloatArray()
         {
@@ -1046,7 +1047,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateDoubleArrayNull()
         {
@@ -1096,7 +1097,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void CreateStringNull()
         {
@@ -1148,7 +1149,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateStringArrayNull()
         {
@@ -1162,7 +1163,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void ImplicitCreateStringArray()
         {
@@ -1236,7 +1237,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateDateTimeArrayNull()
         {
@@ -1324,7 +1325,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateGuidArrayNull()
         {
@@ -1374,7 +1375,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void CreateByteStringNull()
         {
@@ -1414,7 +1415,7 @@ namespace Workstation.UaClient.UnitTests
         [Fact]
         public void CreateByteStringArray()
         {
-            var val = new byte[][] { new byte[]{ 0x48, 0x65, 0x6c, 0x6c, 0x6f } };
+            var val = new byte[][] { new byte[] { 0x48, 0x65, 0x6c, 0x6c, 0x6f } };
             var v = new Variant(val);
 
             v.Value
@@ -1426,7 +1427,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateByteStringArrayNull()
         {
@@ -1476,7 +1477,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void CreateXElementNull()
         {
@@ -1528,7 +1529,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateXElementArrayNull()
         {
@@ -1542,7 +1543,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void ImplicitCreateXElementArray()
         {
@@ -1578,7 +1579,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void CreateNodeIdNull()
         {
@@ -1630,7 +1631,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateNodeIdArrayNull()
         {
@@ -1680,7 +1681,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void CreateExpandedNodeIdNull()
         {
@@ -1705,7 +1706,7 @@ namespace Workstation.UaClient.UnitTests
             v1
                 .Should().Be(v2);
         }
-        
+
         [Fact]
         public void ExplicitConvertToExpandedNodeId()
         {
@@ -1732,7 +1733,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateExpandedNodeIdArrayNull()
         {
@@ -1793,7 +1794,7 @@ namespace Workstation.UaClient.UnitTests
             v1
                 .Should().Be(v2);
         }
-        
+
         [Fact]
         public void ExplicitConvertToStatusCode()
         {
@@ -1820,7 +1821,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateStatusCodeArrayNull()
         {
@@ -1870,7 +1871,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void CreateQualifiedNameNull()
         {
@@ -1922,7 +1923,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateQualifiedNameArrayNull()
         {
@@ -1972,7 +1973,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void CreateLocalizedTextNull()
         {
@@ -2024,7 +2025,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateLocalizedTextArrayNull()
         {
@@ -2074,7 +2075,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void CreateExtensionObjectNull()
         {
@@ -2099,7 +2100,7 @@ namespace Workstation.UaClient.UnitTests
             v1
                 .Should().Be(v2);
         }
-        
+
         [Fact]
         public void ExplicitConvertToExtensionObject()
         {
@@ -2126,7 +2127,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateExtensionObjectArrayNull()
         {
@@ -2140,7 +2141,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void ImplicitCreateExtensionObjectArray()
         {
@@ -2176,7 +2177,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void CreateEncodeableNull()
         {
@@ -2206,7 +2207,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateEncodeableArrayNull()
         {
@@ -2256,7 +2257,7 @@ namespace Workstation.UaClient.UnitTests
                 .Which
                 .Should().Be(val.Length);
         }
-        
+
         [Fact]
         public void CreateEnumArrayNull()
         {
@@ -2270,7 +2271,7 @@ namespace Workstation.UaClient.UnitTests
             v.ArrayDimensions
                 .Should().BeNull();
         }
-        
+
         [Fact]
         public void CreateVariantArrayNull()
         {

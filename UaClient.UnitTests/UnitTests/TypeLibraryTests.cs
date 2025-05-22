@@ -1,11 +1,9 @@
 ﻿using FluentAssertions;
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+
 using Workstation.ServiceModel.Ua;
+
 using Xunit;
 
 namespace Workstation.UaClient.UnitTests
@@ -15,8 +13,8 @@ namespace Workstation.UaClient.UnitTests
         [Fact]
         public void FindBinaryEncodingIdByType()
         {
-           TypeLibrary.TryGetBinaryEncodingIdFromType(typeof(ReadRequest), out ExpandedNodeId nodeid)
-                .Should().BeTrue();
+            TypeLibrary.TryGetBinaryEncodingIdFromType(typeof(ReadRequest), out ExpandedNodeId nodeid)
+                 .Should().BeTrue();
             nodeid
                 .Should().Be(ExpandedNodeId.Parse(ObjectIds.ReadRequest_Encoding_DefaultBinary));
         }

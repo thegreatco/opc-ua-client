@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+
 using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
@@ -7,10 +8,12 @@ using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.X509;
+
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Workstation.ServiceModel.Ua;
 
 namespace Workstation.UaClient

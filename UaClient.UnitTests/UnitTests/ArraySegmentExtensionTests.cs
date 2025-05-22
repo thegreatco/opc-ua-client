@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
-using System;
-using System.Collections.Generic;
+
 using System.Linq;
-using System.Text;
+
 using Workstation.ServiceModel.Ua;
+
 using Xunit;
 
 namespace Workstation.UaClient.UnitTests
@@ -18,7 +18,7 @@ namespace Workstation.UaClient.UnitTests
             array.AsArraySegment()
                 .Should().BeEquivalentTo(array);
         }
-        
+
         [Fact]
         public void AsArraySegmentWithOffset()
         {
@@ -27,7 +27,7 @@ namespace Workstation.UaClient.UnitTests
             array.AsArraySegment(1)
                 .Should().BeEquivalentTo(array.Skip(1));
         }
-        
+
         [Fact]
         public void AsArraySegmentWithOffsetAndCount()
         {
@@ -55,7 +55,7 @@ namespace Workstation.UaClient.UnitTests
                     .Should().BeEquivalentTo(array);
             }
         }
-        
+
         [Fact]
         public void CreateBinaryReader()
         {
@@ -70,7 +70,7 @@ namespace Workstation.UaClient.UnitTests
                 }
             }
         }
-        
+
         [Fact]
         public void CreateBinaryWriter()
         {
@@ -96,7 +96,7 @@ namespace Workstation.UaClient.UnitTests
             array.AsArraySegment().Take(3)
                 .Should().BeEquivalentTo(array.Take(3));
         }
-        
+
         [Fact]
         public void Skip()
         {
@@ -123,7 +123,7 @@ namespace Workstation.UaClient.UnitTests
             array.AsArraySegment().TakeLast(3)
                 .Should().BeEquivalentTo(array.TakeLast(3));
         }
-        
+
         [Fact]
         public void SkipLast()
         {
@@ -145,7 +145,7 @@ namespace Workstation.UaClient.UnitTests
             output
                 .Should().BeEquivalentTo(input.SkipLast(1));
         }
-        
+
         [Fact]
         public void CopyToArray()
         {
@@ -158,7 +158,7 @@ namespace Workstation.UaClient.UnitTests
             output.Take(5)
                 .Should().BeEquivalentTo(input);
         }
-        
+
         [Fact]
         public void ToArray()
         {

@@ -160,7 +160,7 @@ namespace Workstation.ServiceModel.Ua
             {
                 throw new InvalidOperationException("The Array property of the array segment may not be null here");
             }
-            
+
             if (destination.Array is null)
             {
                 throw new InvalidOperationException("The Array property of the destination array segment may not be null here");
@@ -182,7 +182,7 @@ namespace Workstation.ServiceModel.Ua
             {
                 throw new InvalidOperationException("The Array property of the array segment may not be null here");
             }
-            
+
             Array.Copy(segment.Array, segment.Offset, array, arrayIndex, segment.Count);
         }
 

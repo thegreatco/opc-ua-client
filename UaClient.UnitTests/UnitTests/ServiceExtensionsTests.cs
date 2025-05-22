@@ -1,10 +1,11 @@
 ﻿using FluentAssertions;
+
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Workstation.ServiceModel.Ua;
+
 using Xunit;
 
 namespace Workstation.UaClient.UnitTests
@@ -28,7 +29,7 @@ namespace Workstation.UaClient.UnitTests
             input.ToVariantArray()
                 .Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void ToVariantArrayEmpty()
         {
@@ -38,7 +39,7 @@ namespace Workstation.UaClient.UnitTests
             input.ToVariantArray()
                 .Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void ToVariantArrayNull()
         {
@@ -47,7 +48,7 @@ namespace Workstation.UaClient.UnitTests
             Action act = () => input.ToVariantArray();
             act.Should().Throw<ArgumentNullException>();
         }
-        
+
         [Fact]
         public void ToObjectArray()
         {
@@ -57,7 +58,7 @@ namespace Workstation.UaClient.UnitTests
             input.ToObjectArray()
                 .Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void ToObjectArrayEmpty()
         {
@@ -67,7 +68,7 @@ namespace Workstation.UaClient.UnitTests
             input.ToObjectArray()
                 .Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void ToObjectArrayNull()
         {
@@ -85,7 +86,7 @@ namespace Workstation.UaClient.UnitTests
             task.WithCancellation(default).IsCompleted
                 .Should().BeTrue();
         }
-        
+
         [Fact]
         public async Task WithCancellationFastTask()
         {
@@ -111,7 +112,7 @@ namespace Workstation.UaClient.UnitTests
                     .Should().ThrowAsync<OperationCanceledException>();
             }
         }
-        
+
         [Fact]
         public void ValueWithCancellationCompleted()
         {
@@ -134,7 +135,7 @@ namespace Workstation.UaClient.UnitTests
                     .Should().ThrowAsync<OperationCanceledException>();
             }
         }
-        
+
         [Fact]
         public void WithTimeoutAfterCompleted()
         {
@@ -143,7 +144,7 @@ namespace Workstation.UaClient.UnitTests
             task.TimeoutAfter(-1).IsCompleted
                 .Should().BeTrue();
         }
-        
+
         [Fact]
         public void WithTimeoutAfterCompletedCanceledImmediately()
         {
@@ -153,7 +154,7 @@ namespace Workstation.UaClient.UnitTests
             task.TimeoutAfter(-1, token).IsCompleted
                 .Should().BeTrue();
         }
-        
+
         [Fact]
         public async Task WithTimeoutAfterFastTask()
         {
@@ -162,7 +163,7 @@ namespace Workstation.UaClient.UnitTests
             await fast.Invoking(t => t.TimeoutAfter(-1))
                 .Should().NotThrowAsync();
         }
-        
+
         [Fact]
         public async Task WithTimeoutAfterFastTaskCanceledImmediately()
         {
@@ -181,7 +182,7 @@ namespace Workstation.UaClient.UnitTests
             await never.Invoking(t => t.TimeoutAfter(0))
                 .Should().ThrowAsync<TimeoutException>();
         }
-        
+
         [Fact]
         public async Task WithTimeoutAfterCanceled()
         {
@@ -191,7 +192,7 @@ namespace Workstation.UaClient.UnitTests
             await never.Invoking(t => t.TimeoutAfter(0, token))
                 .Should().ThrowAsync<TaskCanceledException>();
         }
-        
+
         [Fact]
         public void ValueWithTimeoutAfterCompleted()
         {

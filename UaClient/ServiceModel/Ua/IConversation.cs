@@ -49,7 +49,7 @@ namespace Workstation.ServiceModel.Ua
         /// <param name="token">A cancellation token used to propagate notification that this operation should be canceled.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
         Task EncryptMessageAsync(Stream bodyStream, uint messageType, uint requestHandle, Func<byte[], int, int, CancellationToken, Task> consume, CancellationToken token);
-        
+
         /// <summary>
         /// Decrypts the content received by the <paramref name="receive"/>
         /// delegate into the <paramref name="bodyStream"/> stream.

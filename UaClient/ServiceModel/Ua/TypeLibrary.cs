@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Xml.Linq;
 
 namespace Workstation.ServiceModel.Ua
@@ -121,7 +120,7 @@ namespace Workstation.ServiceModel.Ua
         }
 
         public static bool TryGetDataTypeIdFromType(Type type, [NotNullWhen(returnValue: true)] out ExpandedNodeId? id)
-        { 
+        {
             return TypeLibrary._instance.Value._dataTypeIdByType.TryGetValue(type, out id);
         }
 

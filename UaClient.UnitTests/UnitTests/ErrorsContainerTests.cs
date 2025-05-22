@@ -1,9 +1,11 @@
 ﻿using FluentAssertions;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 using Workstation.Collections;
+
 using Xunit;
 
 namespace Workstation.UaClient.UnitTests
@@ -65,7 +67,7 @@ namespace Workstation.UaClient.UnitTests
                 .Should().ContainSingle()
                 .Which
                 .Should().Be(1);
-            
+
             called
                 .Should().Be(1);
         }
@@ -84,7 +86,7 @@ namespace Workstation.UaClient.UnitTests
 
             container.GetErrors(property)
                 .Should().BeEmpty();
-            
+
             called
                 .Should().Be(0);
         }
@@ -167,7 +169,7 @@ namespace Workstation.UaClient.UnitTests
             container.GetErrors(property)
                 .Should().BeEquivalentTo(new[] { 2, 3, 6 });
         }
-        
+
         [MemberData(nameof(TestProperties))]
         [Theory]
         public void InsertSame(string property)

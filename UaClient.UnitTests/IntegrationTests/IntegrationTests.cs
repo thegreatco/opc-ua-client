@@ -1,6 +1,16 @@
 ﻿// Copyright (c) Converter Systems LLC. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using FluentAssertions;
+
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.OpenSsl;
+using Org.BouncyCastle.X509;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,16 +20,11 @@ using System.Linq;
 using System.Net;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using FluentAssertions;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Crypto.Parameters;
-using Org.BouncyCastle.OpenSsl;
-using Org.BouncyCastle.X509;
+
 using Workstation.Collections;
 using Workstation.ServiceModel.Ua;
 using Workstation.ServiceModel.Ua.Channels;
+
 using Xunit;
 using Xunit.Abstractions;
 
@@ -691,7 +696,7 @@ namespace Workstation.UaClient.IntegrationTests
             /// </summary>
             [MonitoredItem(nodeId: "i=2258")]
             public ObservableQueue<DataValue> CurrentTimeQueue { get; } = new ObservableQueue<DataValue>(capacity: 16, isFixedSize: true);
- 
+
             /// <summary>
             /// Gets or sets the value of DemoStaticArraysVector.
             /// </summary>

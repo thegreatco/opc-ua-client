@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
+
 using Workstation.ServiceModel.Ua;
+
+using Xunit;
 
 namespace Workstation.UaClient.UnitTests
 {
@@ -111,7 +112,7 @@ namespace Workstation.UaClient.UnitTests
         [Fact]
         public void CreateFromOpaque()
         {
-            var id = new byte [] { 0x65, 0x66 };
+            var id = new byte[] { 0x65, 0x66 };
             var node = new ExpandedNodeId(id);
 
             node.NodeId.Identifier
@@ -125,7 +126,7 @@ namespace Workstation.UaClient.UnitTests
         [Fact]
         public void CreateFromÓpaqueWithNamespace()
         {
-            var id = new byte [] { 0x65, 0x66 };
+            var id = new byte[] { 0x65, 0x66 };
             var node = new ExpandedNodeId(id, namespaceUri: "namespace", serverIndex: 2);
 
             node.NodeId.Identifier
@@ -276,7 +277,7 @@ namespace Workstation.UaClient.UnitTests
         }
 
         public static IEnumerable<object[]> ParseData
-            => ExpandedNodeIds.Select(f => f()).Where(n => n != null).Select(n => new object[] { n.ToString(), n});
+            => ExpandedNodeIds.Select(f => f()).Where(n => n != null).Select(n => new object[] { n.ToString(), n });
 
         [MemberData(nameof(ParseData))]
         [Theory]

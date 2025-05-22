@@ -1,12 +1,8 @@
 ﻿// Copyright (c) Converter Systems LLC. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+
 using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
@@ -16,10 +12,17 @@ using Org.BouncyCastle.Math;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Pkix;
 using Org.BouncyCastle.Security;
-using Org.BouncyCastle.Security.Certificates;
+using Org.BouncyCastle.Utilities.Collections;
 using Org.BouncyCastle.X509;
 using Org.BouncyCastle.X509.Extension;
 using Org.BouncyCastle.X509.Store;
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Workstation.ServiceModel.Ua
 {
@@ -110,7 +113,7 @@ namespace Workstation.ServiceModel.Ua
             var key = default(RsaKeyParameters);
 
             // Build 'own/certs' certificate store.
-            var ownCerts = new Org.BouncyCastle.Utilities.Collections.HashSet();
+            var ownCerts = new HashSet<X509Certificate>();
             var ownCertsInfo = new DirectoryInfo(Path.Combine(_pkiPath, "own", "certs"));
             if (ownCertsInfo.Exists)
             {
@@ -127,14 +130,14 @@ namespace Workstation.ServiceModel.Ua
                 }
             }
 
-            IX509Store ownCertStore = X509StoreFactory.Create("Certificate/Collection", new X509CollectionStoreParameters(ownCerts));
+            IStore<X509Certificate> ownCertStore = CollectionUtilities.CreateStore(ownCerts);
 
             // Select the newest certificate that matches by subject name.
             var selector = new X509CertStoreSelector()
             {
                 Subject = new X509Name(subjectName)
             };
-            crt = ownCertStore.GetMatches(selector).OfType<X509Certificate>().OrderBy(c => c.NotBefore).LastOrDefault();
+            crt = ownCertStore.EnumerateMatches(selector).OrderBy(c => c.NotBefore).LastOrDefault();
             if (crt != null)
             {
                 // If certificate found, verify alt-name, and retrieve private key.
@@ -267,7 +270,7 @@ namespace Workstation.ServiceModel.Ua
             {
                 return Task.FromResult(true);
             }
-            
+
             if (target == null)
             {
                 throw new ArgumentNullException(nameof(target));
@@ -280,7 +283,7 @@ namespace Workstation.ServiceModel.Ua
                 return Task.FromResult(false);
             }
 
-            var trustedCerts = new Org.BouncyCastle.Utilities.Collections.HashSet();
+            var trustedCerts = new HashSet<X509Certificate>();
             var trustedCertsInfo = new DirectoryInfo(Path.Combine(_pkiPath, "trusted"));
             if (!trustedCertsInfo.Exists)
             {
@@ -299,7 +302,7 @@ namespace Workstation.ServiceModel.Ua
                 }
             }
 
-            var intermediateCerts = new Org.BouncyCastle.Utilities.Collections.HashSet();
+            var intermediateCerts = new HashSet<X509Certificate>();
             var intermediateCertsInfo = new DirectoryInfo(Path.Combine(_pkiPath, "issuer"));
             if (!intermediateCertsInfo.Exists)
             {
@@ -317,7 +320,7 @@ namespace Workstation.ServiceModel.Ua
                     }
                 }
             }
-            
+
             if (IsSelfSigned(target))
             {
                 // Create the selector that specifies the starting certificate
@@ -325,8 +328,8 @@ namespace Workstation.ServiceModel.Ua
                 {
                     Certificate = target
                 };
-                IX509Store trustedCertStore = X509StoreFactory.Create("Certificate/Collection", new X509CollectionStoreParameters(trustedCerts));
-                if (trustedCertStore.GetMatches(selector).Count > 0)
+                IStore<X509Certificate> trustedCertStore = CollectionUtilities.CreateStore(trustedCerts);
+                if (trustedCertStore.EnumerateMatches(selector).Any())
                 {
                     return Task.FromResult(true);
                 }
@@ -350,7 +353,7 @@ namespace Workstation.ServiceModel.Ua
             return Task.FromResult(true);
         }
 
-        private static PkixCertPathBuilderResult VerifyCertificate(X509Certificate target, Org.BouncyCastle.Utilities.Collections.HashSet trustedRootCerts, Org.BouncyCastle.Utilities.Collections.HashSet intermediateCerts)
+        private static PkixCertPathBuilderResult VerifyCertificate(X509Certificate target, HashSet<X509Certificate> trustedRootCerts, HashSet<X509Certificate> intermediateCerts)
         {
             intermediateCerts.Add(target);
 
@@ -361,7 +364,7 @@ namespace Workstation.ServiceModel.Ua
             };
 
             // Create the trust anchors (set of root CA certificates)
-            var trustAnchors = new Org.BouncyCastle.Utilities.Collections.HashSet();
+            var trustAnchors = new HashSet<TrustAnchor>();
             foreach (X509Certificate? trustedRootCert in trustedRootCerts)
             {
                 trustAnchors.Add(new TrustAnchor(trustedRootCert, null));
@@ -375,8 +378,8 @@ namespace Workstation.ServiceModel.Ua
             };
 
             // Specify a list of intermediate certificates
-            IX509Store intermediateCertStore = X509StoreFactory.Create("Certificate/Collection", new X509CollectionStoreParameters(intermediateCerts));
-            pkixParams.AddStore(intermediateCertStore);
+            IStore<X509Certificate> intermediateCertStore = CollectionUtilities.CreateStore(intermediateCerts);
+            pkixParams.AddStoreCert(intermediateCertStore);
 
             // Build and verify the certification chain
             PkixCertPathBuilder builder = new PkixCertPathBuilder();

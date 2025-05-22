@@ -37,7 +37,7 @@ namespace Workstation.ServiceModel.Ua
         /// <param name="token">A cancellation token used to propagate notification that this operation should be canceled.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
         Task SendAsync(byte[] buffer, int offset, int count, CancellationToken token);
-        
+
         /// <summary>
         /// Receive content into the buffer.
         /// </summary>

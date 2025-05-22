@@ -1,17 +1,20 @@
 ﻿// Copyright (c) Converter Systems LLC. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Microsoft.Extensions.Logging;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
-using Microsoft.Extensions.Logging;
+
 using Workstation.Collections;
 using Workstation.ServiceModel.Ua.Channels;
 
@@ -565,7 +568,7 @@ namespace Workstation.ServiceModel.Ua
                             if (items.Count > 0)
                             {
                                 var requests = items.Select(m => new MonitoredItemCreateRequest { ItemToMonitor = new ReadValueId { NodeId = ExpandedNodeId.ToNodeId(m.NodeId, this.InnerChannel.NamespaceUris), AttributeId = m.AttributeId, IndexRange = m.IndexRange }, MonitoringMode = m.MonitoringMode, RequestedParameters = new MonitoringParameters { ClientHandle = m.ClientId, DiscardOldest = m.DiscardOldest, QueueSize = m.QueueSize, SamplingInterval = m.SamplingInterval, Filter = m.Filter } }).ToArray();
-                                
+
                                 //split requests array to MaxMonitoredItemsPerCall chunks
                                 int maxmonitoreditemspercall = 100;
                                 MonitoredItemCreateRequest[] requests_chunk;
@@ -575,7 +578,7 @@ namespace Workstation.ServiceModel.Ua
                                     chunk_size = Math.Min(maxmonitoreditemspercall, requests.Length - i_chunk);
                                     requests_chunk = new MonitoredItemCreateRequest[chunk_size];
                                     Array.Copy(requests, i_chunk, requests_chunk, 0, chunk_size);
-                                
+
                                     var itemsRequest = new CreateMonitoredItemsRequest
                                     {
                                         SubscriptionId = id,

@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 using Workstation.ServiceModel.Ua;
+
 using Xunit;
 
 namespace Workstation.UaClient.UnitTests
@@ -50,13 +51,13 @@ namespace Workstation.UaClient.UnitTests
             var diag = new DiagnosticInfo(1, 2, 3, 4, "additional info", StatusCodes.BadDataLost, new DiagnosticInfo(1, localizedText: 5));
 
             var result = new ServiceResult(StatusCodes.GoodClamped, diag, stringList);
-            var expected = new ServiceResult(StatusCodes.GoodClamped, "symbolic id", "namespace", new LocalizedText("localized text", "locale"), "additional info", 
+            var expected = new ServiceResult(StatusCodes.GoodClamped, "symbolic id", "namespace", new LocalizedText("localized text", "locale"), "additional info",
                        new ServiceResult(StatusCodes.BadDataLost, namespaceUri: "namespace", localizedText: new LocalizedText("inner text", null)));
 
             result
                 .Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void CreateFromDiagnosticInfo2()
         {
@@ -68,7 +69,7 @@ namespace Workstation.UaClient.UnitTests
             result
                 .Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void CreateFromDiagnosticInfo3()
         {
@@ -80,7 +81,7 @@ namespace Workstation.UaClient.UnitTests
             result
                 .Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void CreateFromDiagnosticInfo4()
         {
@@ -93,7 +94,7 @@ namespace Workstation.UaClient.UnitTests
             result
                 .Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void CreateFromDiagnosticInfo5()
         {
@@ -104,7 +105,7 @@ namespace Workstation.UaClient.UnitTests
             result
                 .Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void CreateFromDiagnosticInfoArray1()
         {
@@ -114,13 +115,13 @@ namespace Workstation.UaClient.UnitTests
             };
 
             var result = new ServiceResult(StatusCodes.GoodClamped, 0, diag, stringList);
-            var expected = new ServiceResult(StatusCodes.GoodClamped, "symbolic id", "namespace", new LocalizedText("localized text", "locale"), "additional info", 
+            var expected = new ServiceResult(StatusCodes.GoodClamped, "symbolic id", "namespace", new LocalizedText("localized text", "locale"), "additional info",
                        new ServiceResult(StatusCodes.BadDataLost, namespaceUri: "namespace", localizedText: new LocalizedText("inner text", null)));
 
             result
                 .Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void CreateFromDiagnosticInfoArray2()
         {
@@ -135,7 +136,7 @@ namespace Workstation.UaClient.UnitTests
             result
                 .Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void CreateFromDiagnosticInfoArray3()
         {
@@ -150,7 +151,7 @@ namespace Workstation.UaClient.UnitTests
             result
                 .Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void CreateFromDiagnosticInfoArray4()
         {
@@ -166,7 +167,7 @@ namespace Workstation.UaClient.UnitTests
             result
                 .Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void CreateFromDiagnosticInfoArray5()
         {
@@ -188,11 +189,11 @@ namespace Workstation.UaClient.UnitTests
             var result = new ServiceResult(sc);
             ServiceResult.IsGood(result)
                 .Should().BeTrue();
-            
+
             // implicit conversion from uint
             ServiceResult.IsGood(sc)
                 .Should().BeTrue();
-            
+
             // implicit conversion from StatusCode
             ServiceResult.IsGood((StatusCode)sc)
                 .Should().BeTrue();
@@ -272,7 +273,7 @@ namespace Workstation.UaClient.UnitTests
             ServiceResult.IsUncertain(result)
                 .Should().BeFalse();
         }
-        
+
         [Fact]
         public void NullIsNotUncertain()
         {

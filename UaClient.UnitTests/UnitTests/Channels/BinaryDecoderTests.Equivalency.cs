@@ -1,18 +1,11 @@
 ﻿using FluentAssertions;
-using FluentAssertions.Xml;
 using FluentAssertions.Equivalency;
+
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+
 using Workstation.ServiceModel.Ua;
-using Workstation.ServiceModel.Ua.Channels;
-using Xunit;
-using Newtonsoft.Json.Linq;
 
 namespace Workstation.UaClient.UnitTests.Channels
 {
